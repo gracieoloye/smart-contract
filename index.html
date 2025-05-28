@@ -1,157 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MetaMask + Animation</title>
+    <title>Crypto Interaction</title>
     <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <div id="message-container">
-        <h1>Last Christmas I gave you Bitcoin</h1>
-    </div>
-
-    <div id="crypto-message">The very first time you had a crypto. This year</div>
-    <div id="bitcoin-receive">
-        <h2>Send Bitcoin to:</h2>
-        <p id="wallet-address">0x230138Bfb9547A0d06594a121a11b167Ab728CeF</p>
-        <button id="copy-btn">Copy Address</button>
-        <p id="copy-msg" style="color: lightgreen; display: none;">Address copied to clipboard!</p>
-    </div>
-
-    <!-- Added Blockchain Interaction Elements -->
-    <div>
+    <div id="main-container">
         <button id="connect-wallet">Connect Wallet</button>
         <p id="blockchain-message">Connect to MetaMask</p>
-    </div>
-    <div>
+
         <input id="number-input" type="number" placeholder="Enter a number" />
         <button id="store-btn">Store Number</button>
-    </div>
-    <div>
+
         <button id="retrieve-btn">Get Stored Number</button>
         <p id="stored-number">Stored Number will appear here</p>
     </div>
 
-    <!-- Droplet Animation Container -->
-    <div id="container"></div>
-
-    <script>
-        // Web3 and MetaMask integration
-        if (typeof window.ethereum !== 'undefined') {
-            console.log('MetaMask is installed!');
-
-            let web3 = new Web3(window.ethereum);
-
-            async function connectMetaMask() {
-                try {
-                    const accounts = await window.ethereum.request({
-                        method: 'eth_requestAccounts',
-                    });
-
-                    const selectedAccount = accounts[0];
-                    console.log('Connected Account:', selectedAccount);
-                    document.getElementById('blockchain-message').textContent = `Connected: ${selectedAccount}`;
-
-                    const balance = await web3.eth.getBalance(selectedAccount);
-                    console.log('Balance:', web3.utils.fromWei(balance, 'ether'), 'ETH');
-                } catch (error) {
-                    console.error('Connection error:', error);
-                    alert('Failed to connect to MetaMask. Please try again.');
-                }
-            }
-
-            window.ethereum.on('accountsChanged', (accounts) => {
-                if (accounts.length > 0) {
-                    const selectedAccount = accounts[0];
-                    document.getElementById('blockchain-message').textContent = `Connected: ${selectedAccount}`;
-                } else {
-                    document.getElementById('blockchain-message').textContent = 'Connect Wallet';
-                }
-            });
-
-            // Check if MetaMask is already connected
-            window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
-                if (accounts.length > 0) {
-                    const selectedAccount = accounts[0];
-                    document.getElementById('blockchain-message').textContent = `Connected: ${selectedAccount}`;
-                }
-            });
-
-            document.getElementById('connect-wallet').addEventListener('click', connectMetaMask);
-        } else {
-            console.log('MetaMask is not installed!');
-            alert('Please install MetaMask to interact with the blockchain.');
-        }
-
-        // Droplet animation setup
-        const arry = new Array(200).fill();
-        arry.forEach(() => {
-            const droplet = document.createElement('div');
-            droplet.className = 'droplet';
-
-            const pos = Math.random() * 100;
-            const delay = Math.random() * 10;
-            const speed = Math.random() * 18 + 14;
-            const size = Math.random() * 12 + 4;
-            const blurVal = Math.random() * 4 + 1;
-
-            droplet.style.left = `${pos}%`;
-            droplet.style.height = `${size}px`;
-            droplet.style.width = `${size}px`;
-
-            gsap.set(droplet, { opacity: Math.random() * 0.8 + 0.5 });
-            gsap.to(droplet, {
-                y: 1520,
-                delay: delay,
-                duration: speed,
-                filter: `blur(${blurVal}px)`,
-                repeat: -1,
-                ease: 'power1.inOut',
-            });
-
-            document.getElementById('container').appendChild(droplet);
-        });
-
-        // Snowflake animation setup
-        function createSnowflakes() {
-            const container = document.getElementById('container');
-            for (let i = 0; i < 100; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-
-                snowflake.style.left = `${Math.random() * 100}vw`;
-                snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
-                snowflake.style.animationDelay = `${Math.random() * 5}s`;
-                snowflake.style.opacity = `${Math.random() * 0.8 + 0.2}`;
-
-                container.appendChild(snowflake);
-            }
-        }
-
-        createSnowflakes();
-
-        // Local storage for number input (this simulates a smart contract interaction)
-        let storedNumber = null;
-
-        document.getElementById('store-btn').addEventListener('click', () => {
-            const number = document.getElementById('number-input').value;
-            storedNumber = number;
-            alert(`Stored number: ${number}`);
-        });
-
-        document.getElementById('retrieve-btn').addEventListener('click', () => {
-            if (storedNumber !== null) {
-                document.getElementById('stored-number').textContent = `Stored Number: ${storedNumber}`;
-            } else {
-                document.getElementById('stored-number').textContent = 'No number stored yet.';
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
-
 </html>

@@ -9,6 +9,7 @@ body {
     min-height: 100vh;
 }
 
+
 /* Add overlay for readability */
 body::before {
     content: "";
@@ -20,6 +21,7 @@ body::before {
     background: rgba(0, 0, 0, 0.5);
     z-index: 0;
 }
+
 
 /* Center container */
 #main-container {
@@ -35,6 +37,7 @@ body::before {
     z-index: 1;
     min-width: 300px;
 }
+
 
 /* Input field */
 input[type="number"] {

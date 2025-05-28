@@ -1,33 +1,53 @@
-/* Set the background image to the uploaded one */
+/* Set the background image */
 body {
     margin: 0;
     padding: 0;
-    background: url('/mnt/data/136a6115-573e-42ff-b260-a14ffcbe9650.png') no-repeat center center fixed;
+    background: url('background.png') no-repeat center center fixed;
     background-size: cover;
     font-family: Arial, sans-serif;
+    position: relative;
+    min-height: 100vh;
 }
 
-/* Center the main content */
+/* Add overlay for readability */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+/* Center container */
 #main-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 40px;
     border-radius: 15px;
     text-align: center;
     color: white;
+    z-index: 1;
+    min-width: 300px;
 }
 
+/* Input field */
 input[type="number"] {
     padding: 10px;
     margin-top: 15px;
     font-size: 16px;
     border-radius: 5px;
     border: none;
+    width: 80%;
+    max-width: 300px;
 }
 
+/* Buttons */
 button {
     display: block;
     margin: 10px auto;
@@ -44,6 +64,7 @@ button:hover {
     background-color: #45a049;
 }
 
+/* Text display */
 #stored-number {
     margin-top: 15px;
 }
